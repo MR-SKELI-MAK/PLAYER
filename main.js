@@ -68,7 +68,7 @@ function onMouseMove(event) {
 window.addEventListener('mousemove', onMouseMove, false);
 
 // Smoothing factor (INCREASED EVEN MORE!)
-const rotationSpeed = 1; // Increased from 0.1 to 0.15
+const rotationSpeed = 5; // Increased from 0.1 to 0.15
 
 // Add Simple Heading
 const heading = document.createElement('h1');
