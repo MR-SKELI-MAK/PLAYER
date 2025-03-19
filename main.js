@@ -1,6 +1,6 @@
 // Set up scene, camera, and renderer
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.5, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -62,14 +62,13 @@ const intersectPoint = new THREE.Vector3();
 
 // Function to handle mouse movement
 function onMouseMove(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 4 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 4 + 1;
-  
-   
-window.addEventListener('mousemove', onMouseMove, false);
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+}
+window.addEventListener('mousemove', onMouseMove,);
 
 // Smoothing factor (INCREASED EVEN MORE!)
-const rotationSpeed = 5; // Increased from 0.1 to 0.15
+const rotationSpeed = 0.15; // Increased from 0.1 to 0.15
 
 // Add Simple Heading
 const heading = document.createElement('h1');
