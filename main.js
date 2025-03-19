@@ -41,6 +41,17 @@ loader.load('model/scene.gltf', function (gltf) {
     console.error(error);
 });
 
+// Add Simple Heading
+const heading = document.createElement('h1');
+heading.textContent = "ITZ_ME_SZANluvSWK!";
+heading.style.position = 'absolute';
+heading.style.top = '20px'; // Adjust position as needed
+heading.style.left = '50%';
+heading.style.transform = 'translateX(-50%)'; // Center horizontally
+heading.style.zIndex = '2'; // Ensure it's above the canvas
+heading.style.fontSize = '5em'; // Increase font size (adjust as needed)
+document.body.appendChild(heading);
+
 // Add lights
 const ambientLight = new THREE.AmbientLight(0xCC99FF); // Lighter Purple Ambient Light
 scene.add(ambientLight);
@@ -55,53 +66,53 @@ camera.position.z = 5;
 // Mouse tracking variables
 const mouse = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
-
-// Invisible plane for raycasting (ADJUSTED HERE!)
-const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -4.5); // Adjust the -3 to -4.5.
+const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -4.5);
 const intersectPoint = new THREE.Vector3();
 
-// Function to handle mouse movement
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+const rotationSpeed = 0.25;
+
+function onMouseDown(event) {
+    isDragging = true;
+    previousMousePosition = { x: event.clientX, y: event.clientY };
+}
+window.addEventListener('mousedown', onMouseDown, false);
+
+function onMouseUp(event) {
+    isDragging = false;
+}
+window.addEventListener('mouseup', onMouseUp, false);
+
 function onMouseMove(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+    if (isDragging && model) {
+        const deltaMove = { x: event.clientX - previousMousePosition.x, y: event.clientY - previousMousePosition.y };
+        model.rotation.y += deltaMove.x * 0.01;
+        model.rotation.x += deltaMove.y * 0.01;
+        previousMousePosition = { x: event.clientX, y: event.clientY };
+    }
 }
-window.addEventListener('mousemove', onMouseMove,);
+window.addEventListener('mousemove', onMouseMove, false);
 
-// Smoothing factor (INCREASED EVEN MORE!)
-const rotationSpeed = 0.15; // Increased from 0.1 to 0.15
-
-// Add Simple Heading
-const heading = document.createElement('h1');
-heading.textContent = "ITZ_ME_SZANluvSWK!";
-heading.style.position = 'absolute';
-heading.style.top = '20px'; // Adjust position as needed
-heading.style.left = '50%';
-heading.style.transform = 'translateX(-50%)'; // Center horizontally
-heading.style.zIndex = '2'; // Ensure it's above the canvas
-heading.style.fontSize = '5em'; // Increase font size (adjust as needed)
-document.body.appendChild(heading);
-
-
-
-// Animation loop
 function animate() {
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
 
-    if (model) {
-        // Update the raycaster with the mouse position
-        raycaster.setFromCamera(mouse, camera);
-
-        // Intersect the ray with the plane
-        raycaster.ray.intersectPlane(plane, intersectPoint);
-
-        // Calculate the target angle
-        const targetAngle = Math.atan2(intersectPoint.x - model.position.x, intersectPoint.z - model.position.z) + Math.PI;
-
-        // Smoothly interpolate between the current rotation and the target angle
-        model.rotation.y += (targetAngle - model.rotation.y) * rotationSpeed;
-    }
-
-    renderer.render(scene, camera);
-   
+    if (model) {
+        if (!isDragging) {
+            raycaster.setFromCamera(mouse, camera);
+            raycaster.ray.intersectPlane(plane, intersectPoint);
+            const targetAngle = Math.atan2(intersectPoint.x - model.position.x, intersectPoint.z - model.position.z) + Math.PI;
+            model.rotation.y += (targetAngle - model.rotation.y) * rotationSpeed;
+        }
+    }
+    renderer.render(scene, camera);
 }
-animate();
+animate()
+
+
+
+
+
