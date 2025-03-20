@@ -2,24 +2,109 @@
 <html>
 <head>
     <title>SZANluvSWK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Square&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; }
-        h1{
-            color:white;
+        body {
+            margin: 0;
             text-shadow: 0px 0px 10px rgba(155, 0, 245, 0.925),
                          0px 0px 20px rgba(155, 0, 245, 0.925),
                          0px 0px 40px rgba(155, 0, 245, 0.925),
                          0px 0px 80px rgba(155, 0, 245, 0.925);
-
+            font-family: 'Nova Square', sans-serif;
+        }
+        h1 {
+            color: white;
         }
         canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
+        #myButton, #myButton2 {
+            height: 40px;
+            position: absolute;
+            top: 500px;
+            z-index: 2;
+            padding: 10px 20px;
+            background-color: #fc0054fb;
+            color: rgb(248, 248, 248);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(255, 0, 76, 0.925),
+                        0px 0px 20px rgba(255, 0, 76, 0.925),
+                        0px 0px 40px rgba(255, 0, 76, 0.925),
+                        0px 0px 80px rgba(255, 0, 76, 0.925);
+            border-radius: 30px;
+        }
+        #myButton {
+            left: 200px;
+        }
+        #myButton2 {
+            right: 200px;
+            box-shadow: 0px 0px 10px rgba(0, 255, 157, 0.925),
+                        0px 0px 20px rgba(0, 255, 157, 0.925),
+                        0px 0px 40px rgba(0, 255, 157, 0.925),
+                        0px 0px 80px rgba(0, 255, 157, 0.925);
+            background-color: rgba(0, 255, 157, 0.925);
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+        #tooltip {
+            position: absolute;
+            background-color: rgba(128, 128, 128, 0.205);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: none;
+            z-index: 3;
+            box-shadow: 0px 0px 10px rgba(0, 216, 245, 0.925),
+                        0px 0px 20px rgba(0, 216, 245, 0.925),
+                        0px 0px 40px rgba(0, 216, 245, 0.925),
+                        0px 0px 80px rgba(0, 216, 245, 0.925);
+            border-color: white;
+        }
+        #myButton2 a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
-    <canvas>
-    </canvas>
+    <button id="myButton"></button>
+    <div id="myButton2">
+        <a href="/minecraft.html" target="_blank">wanna play game? --></a>
+    </div>
+    <div id="tooltip">
+        <h3>Hey,I m one of the best minccraft speed runner ( All at random seed)</h3>
+        <ul>
+            <li>
+                <p>MINECRAFT 1.16.4 (10MIN:54SEC)</p>
+            </li>
+            <li>
+                <p>MINECRAFT 1.15 (14MIN:42SEC)</p>
+            </li>
+            <li>
+                <p>MINECRAFT 1.7 (26MIN:55SEC)</p>
+            </li>
+        </ul>
+    </div>
+    <canvas></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="main.js"></script>
+    <script>
+        const button = document.getElementById('myButton');
+        const tooltip = document.getElementById('tooltip');
+
+        button.addEventListener('mouseover', function() {
+            tooltip.style.display = 'block';
+            tooltip.style.top = (button.offsetTop + button.offsetHeight + 5) + 'px';
+            tooltip.style.left = button.offsetLeft + 'px';
+        });
+
+        button.addEventListener('mouseout', function() {
+            tooltip.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
